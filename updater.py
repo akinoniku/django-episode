@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 import urllib2
-from episode.models import Rss
+from models import Rss
 
 
 def loop_static_source(source_list):
@@ -12,6 +12,7 @@ def loop_static_source(source_list):
 def get_rss(sort, source_url):
     rss_json = urllib2.urlopen(source_url).read()
     save_rss(sort, json.loads(rss_json)['value']['items'])
+
 
 def save_rss(sort, rss_json):
     counter = 0
