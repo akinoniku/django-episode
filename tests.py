@@ -7,6 +7,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from episode.static import RSS_SOURCES
+from episode.updater import get_rss
 from models import Rss
 
 
@@ -31,3 +33,14 @@ class ModelTest(TestCase):
     def test_model_save(self):
         self.assertEqual(self.r.sort, 'AN')
         self.assertIsNotNone(self.r.timestamp, 'should not be none')
+
+
+class UpdaterTest(TestCase):
+    def test_updater_loop1(self):
+        source = RSS_SOURCES[0]
+        loop_counter = get_rss(source[0], source[1])
+        self.assertGreater(loop_counter, 0, 'did not save file')
+
+        source = RSS_SOURCES[0]
+        loop_counter = get_rss(source[0], source[1])
+        self.assertEqual(loop_counter, 0, 'rss not unique %s, %s' % (loop_counter, Rss.objects.all().count()))
