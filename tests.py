@@ -7,7 +7,7 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from episode.models import Rss
+from models import Rss
 
 
 class SimpleTest(TestCase):
