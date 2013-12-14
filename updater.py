@@ -33,13 +33,27 @@ def save_rss(sort, rss_json):
     return counter
 
 def clean_info_title(title):
-    # TODO: for Ricter
-    # 删除‘第二季’之类的字符和括号及括号以内的字符
+    """ 删除‘第二季’之类的字符和括号及括号以内的字符
+
+    Args:
+        title: a string
+    Returns:
+        A cleaned string
+    TODO: for Ricter
+    """
     pass
 
 def update_info_list(sort, info_list):
-    # TODO: for Ricter
-    # 保存 info_list 里面的新番信息到 Info Model
-    # 当新的info_list传入，监测json更变，如果之前now_playing 为连载中的消失了，把now_playing设成 完结
-    # 如果是不在Info中的，添加
+    """ 保存 info_list 里面的新番信息到 Info Model
+
+    当新的info_list传入，监测json更变，如果之前now_playing 为连载中的消失了，把now_playing设成 完结
+    如果是不在Info中的，添加它
+
+    Args:
+        sort: SORT_CHOICES
+        info_list: a object of info list, not a json
+    Returns:
+        An int counter counting changed info obj
+    TODO: for Ricter
+    """
     pass
