@@ -7,8 +7,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from episode.static import RSS_SOURCES
-from episode.updater import get_rss
+from static import RSS_SOURCES
+from updater import get_rss
 from models import Rss
 
 

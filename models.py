@@ -1,5 +1,5 @@
 from django.db import models
-from episode.static import SORT_CHOICES
+from static import SORT_CHOICES
 
 
 class Rss(models.Model):
