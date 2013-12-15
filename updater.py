@@ -3,8 +3,8 @@ from datetime import datetime
 import json
 import urllib2
 from django.utils.timezone import UTC
-from models import Rss
-
+from models import Rss, Info
+import re
 
 def loop_static_source(source_list):
     for sort, source in source_list:
@@ -41,7 +41,9 @@ def clean_info_title(title):
         A cleaned string
     TODO: for Ricter
     """
-    pass
+    m = re.match(ur'(.*)[\s\S]+第[\w\W]季', title.split('（')[0].decode('utf-8'))
+    if m: return m.group(1).encode('utf-8')
+    return title.split('（')[0]
 
 def update_info_list(sort, info_list):
     """ 保存 info_list 里面的新番信息到 Info Model
@@ -56,4 +58,28 @@ def update_info_list(sort, info_list):
         An int counter counting changed info obj
     TODO: for Ricter
     """
-    pass
+    serial_list = [str(data) for data in Info.objects.all()]
+    info_title_list = [clean_info_title(info['title'].encode('utf-8')) for info in info_list]
+    for info in info_list:
+        clean_title = clean_info_title(info['title'].encode('utf-8'))
+        if not clean_title in serial_list:
+            Info(
+                sort = sort,
+                title = clean_title,
+                tags = None,
+                douban = None,
+                weekday = info['weekday'],
+                bgm_count = info['bgmcount'],
+                images = info['cover'],
+                now_playing = 0
+            ).save()
+    for serial in serial_list:
+        if not serial in info_title_list:
+            p = Info.objects.get(title=serial)
+            p.now_playing = 1
+            p.save()
+
+    """for data in Info.objects.all():
+        print data
+    print Info.objects.all().count(), len(info_list)"""
+    return abs(len(serial_list) - len(info_list))
